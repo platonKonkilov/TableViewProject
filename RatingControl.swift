@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class RaitingControl: UIStackView {
+@IBDesignable class RatingControl: UIStackView {
     
     var rating = 0 {
         didSet {
@@ -35,7 +35,6 @@ import UIKit
         super.init(frame: frame)
         setupButton()
     }
-    
     required init(coder: NSCoder) {
         super.init(coder: coder)
         setupButton()
@@ -67,7 +66,7 @@ import UIKit
         ratingButtons.removeAll()
         let bundel = Bundle(for: type(of: self))
         let filledStar = UIImage(named: "filledStar", in: bundel, compatibleWith: self.traitCollection)
-        let emptySatar = UIImage(named: "emptySatar", in: bundel, compatibleWith: self.traitCollection)
+        let emptySatar = UIImage(named: "emptyStar", in: bundel, compatibleWith: self.traitCollection)
         let highlightedStar = UIImage(named: "highlightedStar", in: bundel, compatibleWith: self.traitCollection)
         
         for _ in 0..<starCount {
@@ -90,12 +89,16 @@ import UIKit
         
             //Add the button to the stack
             addArrangedSubview(button)
-    }
+            
+            ratingButtons.append(button)
+        }
+        
+        updateButtonSelectState()
     }
     
     private func updateButtonSelectState() {
         for (index, button) in ratingButtons.enumerated() {
-            button.isSelected = index < rating
+            button.isSelected = index < Int(rating)
         }
     }
 }
